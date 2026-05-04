@@ -1,0 +1,3073 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Codex Gospodarza">
+<meta name="theme-color" content="#FAFAF7">
+<title>Codex Gospodarza · Sezon I</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-page: #f5f3ee;
+    --bg-card: #FAFAF7;
+    --bg-elevated: #ffffff;
+    --bg-soft: #F0EDE3;
+    --bg-muted: #EEEAE0;
+    --bg-warm: #FDF8E8;
+
+    --border: #E8E4D8;
+    --border-strong: #D4CFBE;
+    --border-soft: #F0EDE3;
+
+    --text-primary: #2D2A24;
+    --text-secondary: #6B6552;
+    --text-muted: #8B8675;
+    --text-faint: #B0AB99;
+
+    --gold: #B8860B;
+    --gold-light: #DAA520;
+    --gold-dark: #8B6914;
+    --gold-bg: #FDF8E8;
+    --gold-bg-deep: #F8E9C0;
+    --gold-border: #E0C97F;
+
+    --green: #2D6E47;
+    --green-light: #5A9168;
+    --green-bg: #F0F7F0;
+    --green-border: #B8D4B8;
+
+    --red: #C0392B;
+    --red-light: #E74C3C;
+    --red-bg: #FCEEEC;
+    --red-border: #E8B5AE;
+
+    --blue: #3D7CBA;
+    --blue-light: #5A9CDB;
+    --blue-bg: #EBF3FB;
+    --blue-border: #BAD1E8;
+
+    --orange: #D68A3F;
+    --orange-bg: #FCF1E2;
+
+    --shadow-sm: 0 1px 2px rgba(45, 42, 36, 0.04);
+    --shadow-md: 0 2px 8px rgba(45, 42, 36, 0.06);
+    --shadow-lg: 0 8px 24px rgba(45, 42, 36, 0.08);
+
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Playfair Display', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body { padding-bottom: 80px; }
+
+  .dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+
+  /* ============================================ */
+  /* BANNER                                        */
+  /* ============================================ */
+  .banner {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .banner-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .banner-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .banner-name {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .banner-meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .pill strong { color: var(--text-primary); font-weight: 600; margin-left: 4px; }
+  .pill.title-pill strong { color: var(--gold); font-style: italic; }
+
+  .treasure-card {
+    background: linear-gradient(135deg, var(--gold-bg), var(--gold-bg-deep));
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 16px 28px;
+    text-align: right;
+    min-width: 180px;
+  }
+  .treasure-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .treasure-value {
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--gold-dark);
+    font-family: var(--font-mono);
+    margin-top: 4px;
+    letter-spacing: -0.02em;
+  }
+  .treasure-value::after { content: ' zł'; font-size: 14px; opacity: 0.7; }
+  .treasure-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    font-family: var(--font-mono);
+  }
+
+  /* Two level bars in banner */
+  .levels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-soft);
+  }
+  .level-row {}
+  .level-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+  }
+  .level-head strong { color: var(--text-primary); font-weight: 600; }
+  .level-head .lvl-num {
+    color: var(--gold);
+    font-family: var(--font-mono);
+    font-weight: 700;
+  }
+  .level-head .lvl-num.weight { color: var(--green); }
+  .level-bar {
+    height: 8px;
+    background: var(--bg-soft);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .level-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .level-fill.kasa { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .level-fill.weight { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+
+  /* ============================================ */
+  /* SECTION                                       */
+  /* ============================================ */
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+    padding: 0 4px;
+  }
+  .section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .section-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  /* ============================================ */
+  /* TODAY OVERVIEW (paski + lista)                */
+  /* ============================================ */
+  .today-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .today-bars-card,
+  .today-list-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .today-card-title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    margin-bottom: 18px;
+  }
+
+  /* Bars */
+  .progress-bar-row {
+    margin-bottom: 18px;
+  }
+  .progress-bar-row:last-child { margin-bottom: 0; }
+  .progress-bar-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .progress-bar-label {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .progress-bar-value {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+  .progress-bar-value .pct {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 11px;
+    margin-left: 6px;
+  }
+  .progress-bar-track {
+    height: 12px;
+    background: var(--bg-soft);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .progress-bar-fill.gold { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .progress-bar-fill.green { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+  .progress-bar-fill.blue { background: linear-gradient(90deg, var(--blue), var(--blue-light)); }
+  .progress-bar-fill.complete { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+
+  .progress-bar-foot {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Today list */
+  .todo-section-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    margin: 14px 0 8px;
+  }
+  .todo-section-title:first-child { margin-top: 0; }
+
+  .todo-item {
+    display: grid;
+    grid-template-columns: 18px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 13px;
+  }
+  .todo-circle {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--text-faint);
+    border-radius: 50%;
+  }
+  .todo-item.done .todo-circle {
+    background: var(--green);
+    border-color: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+  }
+  .todo-item.done .todo-circle::after { content: '✓'; }
+  .todo-item.locked { opacity: 0.4; }
+  .todo-item.locked .todo-circle {
+    border-style: dashed;
+    border-color: var(--text-faint);
+  }
+
+  .todo-name {
+    color: var(--text-primary);
+  }
+  .todo-item.done .todo-name {
+    color: var(--text-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--green-border);
+  }
+  .todo-name .hint {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-left: 4px;
+  }
+
+  .todo-reward {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .todo-item.done .todo-reward { color: var(--green); }
+
+  .todo-summary {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-soft);
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  .todo-summary-label { color: var(--text-secondary); }
+  .todo-summary-value {
+    font-family: var(--font-mono);
+    color: var(--gold-dark);
+    font-weight: 600;
+  }
+
+  /* ============================================ */
+  /* WEIGHT SECTION                                */
+  /* ============================================ */
+  .weight-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .weight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .weight-input-section {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .weight-current {
+    margin-bottom: 14px;
+  }
+  .weight-current-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .weight-current-value {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .weight-current-value .unit {
+    font-size: 18px;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .weight-delta {
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .weight-delta.up { color: var(--red); }
+  .weight-delta.zero { color: var(--text-muted); }
+
+  .weight-input-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+
+  .input-text {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .input-text:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-bg);
+  }
+
+  .btn {
+    background: var(--text-primary);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: #1a1a1a; }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { background: var(--green); }
+  .btn.primary:hover { background: #245E3B; }
+  .btn.gold { background: var(--gold); }
+  .btn.gold:hover { background: var(--gold-dark); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .btn.ghost:hover {
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+  }
+  .btn.danger {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid var(--red-border);
+  }
+  .btn.danger:hover {
+    background: var(--red-bg);
+  }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+  .weight-progress-row {
+    margin-top: 12px;
+  }
+  .penalty-card {
+    background: var(--red-bg);
+    border: 1px solid var(--red-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--red);
+    display: none;
+  }
+  .penalty-card.show { display: block; }
+  .penalty-card strong { color: var(--red-light); font-weight: 600; }
+
+  /* Sparkline */
+  .weight-chart-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .weight-chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .weight-chart-title {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .weight-chart-stat {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+  .weight-chart-stat .delta { color: var(--green); margin-left: 6px; font-size: 12px; }
+  .weight-chart-stat .delta.up { color: var(--red); }
+
+  /* ============================================ */
+  /* KPI ROW                                       */
+  /* ============================================ */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .kpi {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow-sm);
+  }
+  .kpi-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .kpi-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-feature-settings: 'tnum';
+    line-height: 1;
+  }
+  .kpi-unit { font-size: 13px; color: var(--text-muted); font-weight: 400; margin-left: 2px; }
+  .kpi-delta {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  .kpi-delta.up { color: var(--green); }
+  .kpi-delta.down { color: var(--red); }
+  .kpi-delta.neutral { color: var(--text-muted); }
+
+  /* ============================================ */
+  /* DAILY REPS                                    */
+  /* ============================================ */
+  .reps-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .reps-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .reps-head-title {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .reps-head-total {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .reps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (min-width: 720px) {
+    .reps-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .rep-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    transition: all 0.15s;
+  }
+  .rep-card:hover { border-color: var(--border-strong); }
+  .rep-card.locked { opacity: 0.5; }
+  .rep-card.has-value { border-color: var(--gold-border); background: var(--gold-bg); }
+
+  .rep-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .rep-name {
+    font-size: 12px;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .rep-rate {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .rep-input-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .rep-input {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 8px 10px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    border-radius: 6px;
+    width: 100%;
+  }
+  .rep-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px var(--gold-bg);
+  }
+  .rep-add-btn {
+    background: var(--text-primary);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .rep-add-btn:hover { background: #1a1a1a; }
+  .rep-add-btn:disabled { background: var(--text-faint); cursor: not-allowed; }
+
+  .rep-stats {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+  .rep-stats strong { color: var(--text-primary); font-weight: 600; }
+  .rep-stats .earned { color: var(--gold); font-weight: 600; }
+
+  .rep-stats .locked-text {
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
+  /* ============================================ */
+  /* HEATMAP                                       */
+  /* ============================================ */
+  .heatmap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+  }
+  .heatmap-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .heatmap-title {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .heatmap-stat {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+  .heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(53, 1fr);
+    gap: 3px;
+    margin-bottom: 12px;
+  }
+  .heatmap-cell {
+    aspect-ratio: 1;
+    background: var(--bg-soft);
+    border-radius: 2px;
+    transition: transform 0.1s;
+    cursor: pointer;
+  }
+  .heatmap-cell:hover { transform: scale(1.4); z-index: 2; position: relative; }
+  .heatmap-cell.l1 { background: #DCD3B8; }
+  .heatmap-cell.l2 { background: #C9A873; }
+  .heatmap-cell.l3 { background: var(--gold); }
+  .heatmap-cell.l4 { background: var(--gold-dark); }
+  .heatmap-cell.today { box-shadow: 0 0 0 2px var(--text-primary); }
+  .heatmap-cell.future { background: transparent; border: 1px dashed var(--border); }
+  .heatmap-cell.sabbath { background: var(--bg-warm); border: 1px solid var(--gold-border); }
+
+  .heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .heatmap-legend-cell {
+    width: 12px; height: 12px;
+    border-radius: 2px;
+  }
+
+  /* ============================================ */
+  /* COMPENDIUM (milestone'y)                      */
+  /* ============================================ */
+  .compendium-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .milestone-cat {
+    margin-bottom: 14px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .milestone-cat:last-child { margin-bottom: 0; }
+
+  .milestone-cat-head {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .milestone-cat-head:hover { background: var(--bg-soft); }
+
+  .milestone-cat.open .milestone-cat-head {
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .milestone-cat-name {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .milestone-cat-progress {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .milestone-cat-progress strong { color: var(--gold); font-weight: 600; }
+
+  .milestone-cat-list {
+    display: none;
+    padding: 4px 0;
+  }
+  .milestone-cat.open .milestone-cat-list { display: block; }
+
+  .milestone-row {
+    display: grid;
+    grid-template-columns: 18px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 9px 16px;
+    font-size: 13px;
+    color: var(--text-primary);
+    border-left: 2px solid transparent;
+    transition: all 0.12s;
+    cursor: pointer;
+  }
+  .milestone-row:hover {
+    background: var(--bg-soft);
+    border-left-color: var(--gold);
+  }
+  .milestone-row.completed {
+    color: var(--text-muted);
+    background: var(--green-bg);
+  }
+  .milestone-row.completed:hover { background: #E8F1E8; }
+  .milestone-row.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+    color: var(--text-faint);
+  }
+  .milestone-row.locked:hover {
+    background: transparent;
+    border-left-color: transparent;
+  }
+  .milestone-row.legendary {
+    background: linear-gradient(90deg, var(--gold-bg), transparent);
+  }
+  .milestone-row.legendary:hover {
+    background: linear-gradient(90deg, var(--gold-bg-deep), var(--bg-soft));
+  }
+
+  .milestone-cb {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--text-faint);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+  }
+  .milestone-row.completed .milestone-cb {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .milestone-row.completed .milestone-cb::after { content: '✓'; font-weight: 700; }
+
+  .milestone-icon {
+    color: var(--orange);
+    margin-right: 6px;
+  }
+
+  .milestone-reward {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .milestone-row.completed .milestone-reward { color: var(--green); }
+  .milestone-row.locked .milestone-reward { color: var(--text-faint); }
+  .milestone-row.legendary .milestone-reward { color: var(--orange); }
+
+  /* ============================================ */
+  /* PERKS                                         */
+  /* ============================================ */
+  .perks-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .perks-info-bar {
+    background: var(--bg-warm);
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+  }
+  .perks-info-bar strong { color: var(--gold-dark); font-weight: 600; }
+
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .perk-tree {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+  }
+
+  .perk-tree-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .perk-tree-icon {
+    font-size: 16px;
+    width: 22px;
+    text-align: center;
+  }
+  .perk-tree-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .perk-tier {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .perk-tier:hover:not(.taken):not(.locked) .perk-tier-num {
+    background: var(--gold-bg-deep);
+    border-color: var(--gold);
+  }
+
+  .perk-tier-num {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--text-faint);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .perk-tier.taken .perk-tier-num {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: white;
+  }
+  .perk-tier.locked { opacity: 0.4; cursor: not-allowed; }
+  .perk-tier.locked .perk-tier-num {
+    border-style: dashed;
+  }
+
+  .perk-tier-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.35;
+  }
+  .perk-tier.taken .perk-tier-text { color: var(--green); }
+
+  /* ============================================ */
+  /* TREASURE LEDGER                               */
+  /* ============================================ */
+  .ledger-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .ledger-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .ledger-stat {}
+  .ledger-stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .ledger-stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+  .ledger-stat-value.gold { color: var(--gold-dark); }
+  .ledger-stat-value.green { color: var(--green); }
+  .ledger-stat-value.red { color: var(--red); }
+  .ledger-stat-value.muted { color: var(--text-muted); }
+
+  .ledger-actions {
+    margin-bottom: 14px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .history-list {
+    max-height: 360px;
+    overflow-y: auto;
+  }
+  .history-list::-webkit-scrollbar { width: 6px; }
+  .history-list::-webkit-scrollbar-track { background: var(--bg-soft); }
+  .history-list::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+  .history-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .history-item:last-child { border-bottom: none; }
+
+  .history-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    background: var(--bg-soft);
+  }
+  .history-icon.up { background: var(--green-bg); color: var(--green); }
+  .history-icon.up::after { content: '↑'; font-weight: 700; }
+  .history-icon.down { background: var(--red-bg); color: var(--red); }
+  .history-icon.down::after { content: '↓'; font-weight: 700; }
+  .history-icon.legendary { background: var(--gold-bg-deep); color: var(--gold-dark); }
+  .history-icon.legendary::after { content: '★'; font-weight: 700; }
+  .history-icon.withdraw { background: var(--blue-bg); color: var(--blue); }
+  .history-icon.withdraw::after { content: '→'; font-weight: 700; }
+
+  .history-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .history-name { color: var(--text-primary); }
+  .history-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .history-amount {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--green);
+    white-space: nowrap;
+  }
+  .history-item.penalty .history-amount { color: var(--red); }
+  .history-item.legendary .history-amount { color: var(--gold-dark); }
+  .history-item.withdraw .history-amount { color: var(--blue); }
+
+  .history-empty {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 13px;
+  }
+
+  /* ============================================ */
+  /* MODAL                                         */
+  /* ============================================ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(45, 42, 36, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(4px);
+    padding: 20px;
+  }
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .modal-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .modal-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .modal-form { margin-bottom: 20px; }
+  .modal-field {
+    margin-bottom: 12px;
+  }
+  .modal-field label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .modal-field input,
+  .modal-field select {
+    width: 100%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+  }
+  .modal-field input:focus,
+  .modal-field select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-bg);
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  /* ============================================ */
+  /* TOAST                                         */
+  /* ============================================ */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--text-primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    transform: translateX(150%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 300;
+    max-width: 360px;
+  }
+  .toast.show { transform: translateX(0); }
+  .toast.gold { background: var(--gold-dark); }
+  .toast.green { background: var(--green); }
+  .toast.red { background: var(--red); }
+  .toast.blue { background: var(--blue); }
+  .toast.legendary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border: 1px solid var(--gold-light);
+  }
+
+  /* ============================================ */
+  /* FOOTER                                        */
+  /* ============================================ */
+  .footer {
+    margin-top: 40px;
+    padding: 20px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .footer-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Sabbath banner */
+  .sabbath-banner {
+    background: linear-gradient(135deg, var(--gold-bg), var(--gold-bg-deep));
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--gold-dark);
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .sabbath-banner.show { display: flex; }
+  .sabbath-banner-icon { font-size: 16px; }
+  .sabbath-banner strong { font-weight: 600; }
+
+  /* Reflection ritual */
+  .reflection-card {
+    background: var(--bg-warm);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    display: none;
+  }
+  .reflection-card.show { display: block; }
+
+  .reflection-card h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .reflection-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .reflection-stat {
+    text-align: center;
+  }
+  .reflection-stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .reflection-stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .banner-row { grid-template-columns: 1fr; }
+    .treasure-card { text-align: left; }
+    .levels { grid-template-columns: 1fr; }
+    .today-grid { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .weight-grid { grid-template-columns: 1fr; }
+    .reps-grid { grid-template-columns: repeat(2, 1fr); }
+    .ledger-summary { grid-template-columns: repeat(2, 1fr); }
+    .reflection-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .dashboard { padding: 20px 14px; }
+    .banner { padding: 22px; }
+    .banner-name { font-size: 26px; }
+    .heatmap-grid { grid-template-columns: repeat(26, 1fr); gap: 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="dashboard">
+
+  <!-- Sabbath day banner (shows only on Sundays) -->
+  <div class="sabbath-banner" id="sabbath-banner">
+    <span class="sabbath-banner-icon">☀</span>
+    <span><strong>Niedziela — Dzień regeneracji.</strong> Daily questy aktywne, daily reps wyłączone (zero kasy z pompek/marszu/etc.). Zachowaj odpoczynek.</span>
+  </div>
+
+  <!-- Sunday reflection ritual (shows on Sundays after data) -->
+  <div class="reflection-card" id="reflection-card">
+    <h3>Niedzielny rytuał refleksji · Tydzień <span id="reflection-week">—</span></h3>
+    <div style="font-size: 13px; color: var(--text-secondary);">Krótka pauza. Spójrz wstecz. Co poszło dobrze, co byś zmienił?</div>
+    <div class="reflection-stats">
+      <div class="reflection-stat">
+        <div class="reflection-stat-label">Zarobione</div>
+        <div class="reflection-stat-value" id="reflection-earned">— zł</div>
+      </div>
+      <div class="reflection-stat">
+        <div class="reflection-stat-label">Schudłeś</div>
+        <div class="reflection-stat-value" id="reflection-lost">— kg</div>
+      </div>
+      <div class="reflection-stat">
+        <div class="reflection-stat-label">Treningów</div>
+        <div class="reflection-stat-value" id="reflection-workouts">—</div>
+      </div>
+      <div class="reflection-stat">
+        <div class="reflection-stat-label">Streak</div>
+        <div class="reflection-stat-value" id="reflection-streak">—</div>
+      </div>
+    </div>
+    <textarea id="reflection-text" rows="3" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: var(--font-sans); font-size: 13px; resize: vertical;" placeholder="Co poszło dobrze tego tygodnia? Co byś zmienił? (3-4 zdania)"></textarea>
+    <div style="display: flex; gap: 8px; margin-top: 10px;">
+      <button class="btn primary btn-sm" id="reflection-save">Zapisz refleksję</button>
+      <button class="btn ghost btn-sm" id="reflection-skip">Pomiń</button>
+    </div>
+  </div>
+
+  <!-- Banner -->
+  <header class="banner">
+    <div class="banner-row">
+      <div>
+        <div class="banner-eyebrow">Codex Gospodarza · Sezon I · Dzień <span id="day-counter">1</span> / 365</div>
+        <div class="banner-name" id="character-name">Grzegorz Bardowski</div>
+        <div class="banner-meta">
+          <span class="pill title-pill">Tytuł <strong id="title-display">Nowicjusz</strong></span>
+          <span class="pill">Streak <strong id="streak-display">0</strong> dni</span>
+          <span class="pill">186 cm · cel 90 kg</span>
+        </div>
+      </div>
+      <div class="treasure-card">
+        <div class="treasure-label">Skarbiec · do wypłaty</div>
+        <div class="treasure-value" id="treasure-display">0</div>
+        <div class="treasure-sub" id="treasure-sub">— zarobione · — wypłacone</div>
+      </div>
+    </div>
+    <div class="levels">
+      <div class="level-row">
+        <div class="level-head">
+          <span>Poziom kasowy <strong class="lvl-num" id="kasa-level">1</strong></span>
+          <span><strong id="kasa-xp-current">0</strong> / <span id="kasa-xp-needed">1000</span> XP</span>
+        </div>
+        <div class="level-bar"><div class="level-fill kasa" id="kasa-fill" style="width: 0%"></div></div>
+      </div>
+      <div class="level-row">
+        <div class="level-head">
+          <span>Poziom wagowy <strong class="lvl-num weight" id="weight-level">0</strong></span>
+          <span>schudniętych <strong id="weight-lost-display">0.0</strong> kg</span>
+        </div>
+        <div class="level-bar"><div class="level-fill weight" id="weight-fill" style="width: 0%"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TODAY Section: bars + todo list -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Dzisiejsze tempo</div>
+      <div class="section-meta" id="today-date">—</div>
+    </div>
+    <div class="today-grid">
+      <!-- Progress bars -->
+      <div class="today-bars-card">
+        <div class="today-card-title">Jak idzie dziś</div>
+        <div class="progress-bar-row">
+          <div class="progress-bar-head">
+            <div class="progress-bar-label">Daily questy</div>
+            <div class="progress-bar-value"><span id="bar-quests">0 / 6</span> <span class="pct" id="bar-quests-pct">0%</span></div>
+          </div>
+          <div class="progress-bar-track"><div class="progress-bar-fill gold" id="bar-quests-fill" style="width: 0%"></div></div>
+          <div class="progress-bar-foot" id="bar-quests-foot">—</div>
+        </div>
+        <div class="progress-bar-row">
+          <div class="progress-bar-head">
+            <div class="progress-bar-label">Daily reps · trening</div>
+            <div class="progress-bar-value"><span id="bar-reps-train">0 zł</span></div>
+          </div>
+          <div class="progress-bar-track"><div class="progress-bar-fill green" id="bar-reps-train-fill" style="width: 0%"></div></div>
+          <div class="progress-bar-foot" id="bar-reps-train-foot">—</div>
+        </div>
+        <div class="progress-bar-row">
+          <div class="progress-bar-head">
+            <div class="progress-bar-label">Kroki</div>
+            <div class="progress-bar-value"><span id="bar-steps">0 / 10 000</span> <span class="pct" id="bar-steps-pct">0%</span></div>
+          </div>
+          <div class="progress-bar-track"><div class="progress-bar-fill blue" id="bar-steps-fill" style="width: 0%"></div></div>
+          <div class="progress-bar-foot">edytuj quest "10 000 kroków" lub aktywuj autocount przez kalorie</div>
+        </div>
+      </div>
+
+      <!-- TODO list -->
+      <div class="today-list-card">
+        <div class="today-card-title">Co dziś jeszcze do zrobienia</div>
+        <div id="todo-pending"></div>
+        <div class="todo-section-title" id="todo-done-section-title" style="display: none;">Już zrobione</div>
+        <div id="todo-done"></div>
+        <div class="todo-summary">
+          <span class="todo-summary-label">Czeka jeszcze do zarobienia</span>
+          <span class="todo-summary-value" id="todo-pending-sum">0 zł</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weight section -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Kronika wagi</div>
+      <div class="section-meta">cel 90 kg · stretch 85 kg</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-grid">
+        <div class="weight-input-section">
+          <div class="weight-current">
+            <div class="weight-current-label">Aktualna waga</div>
+            <div class="weight-current-value"><span id="current-weight">115.0</span><span class="unit">kg</span></div>
+            <div class="weight-delta" id="weight-delta-text">— od startu</div>
+          </div>
+          <div class="weight-input-row">
+            <input type="number" step="0.1" min="50" max="200" class="input-text" id="weight-input" placeholder="Dziś rano (kg)">
+            <button class="btn primary" id="weight-submit">Zapisz wagę</button>
+          </div>
+          <div class="penalty-card" id="penalty-card">
+            ⚠ Najniższa osiągnięta: <strong id="min-weight-display">— kg</strong> · Kara skalowana: 100 zł / 250 zł / 500 zł / 800 zł / 1200 zł / +400 zł·kg
+          </div>
+          <div class="weight-progress-row">
+            <div class="progress-bar-row">
+              <div class="progress-bar-head">
+                <div class="progress-bar-label" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;">Postęp do celu</div>
+                <div class="progress-bar-value" style="font-size: 12px;"><span id="weight-progress-text">0.0 / 28.0 kg</span></div>
+              </div>
+              <div class="progress-bar-track"><div class="progress-bar-fill complete" id="weight-progress-fill" style="width: 0%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="weight-chart-card">
+          <div class="weight-chart-head">
+            <div class="weight-chart-title">Trend wagi</div>
+            <div class="weight-chart-stat" id="weight-chart-stat">— kg</div>
+          </div>
+          <svg id="weight-chart" width="100%" height="140" viewBox="0 0 600 140" preserveAspectRatio="none"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Statystyki sezonu</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Pompki łącznie</div>
+        <div class="kpi-value" id="kpi-pushups">0</div>
+        <div class="kpi-delta neutral" id="kpi-pushups-delta">— dziś</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Kilometry łącznie</div>
+        <div class="kpi-value" id="kpi-km">0<span class="kpi-unit">km</span></div>
+        <div class="kpi-delta neutral" id="kpi-km-delta">marsz + rower</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Dni z dziećmi</div>
+        <div class="kpi-value" id="kpi-children">0</div>
+        <div class="kpi-delta neutral">aktywnie 30+ min</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Milestone'y</div>
+        <div class="kpi-value" id="kpi-milestones">0<span class="kpi-unit">/ 20</span></div>
+        <div class="kpi-delta neutral">trofea zdobyte</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily reps -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Trening · pompki, przysiady, brzuszki, plank</div>
+      <div class="section-meta" id="reps-train-total">— zł dziś</div>
+    </div>
+    <div class="reps-card">
+      <div class="reps-grid" id="reps-training-grid"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Kardio · marsz/bieżnia, rower</div>
+      <div class="section-meta" id="reps-cardio-total">— zł dziś</div>
+    </div>
+    <div class="reps-card">
+      <div class="reps-grid" id="reps-cardio-grid"></div>
+    </div>
+  </div>
+
+  <!-- Heatmap year -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Aktywność roczna</div>
+      <div class="section-meta">365 dni sezonu</div>
+    </div>
+    <div class="heatmap-card">
+      <div class="heatmap-head">
+        <div class="heatmap-title">Zarobione zł / dzień</div>
+        <div class="heatmap-stat" id="heatmap-stat">— / 365</div>
+      </div>
+      <div class="heatmap-grid" id="heatmap-grid"></div>
+      <div class="heatmap-legend">
+        <span>mniej</span>
+        <div class="heatmap-legend-cell" style="background: #EEEAE0;"></div>
+        <div class="heatmap-legend-cell" style="background: #DCD3B8;"></div>
+        <div class="heatmap-legend-cell" style="background: #C9A873;"></div>
+        <div class="heatmap-legend-cell" style="background: var(--gold);"></div>
+        <div class="heatmap-legend-cell" style="background: var(--gold-dark);"></div>
+        <span>więcej</span>
+        <span style="margin-left: 16px; display: flex; align-items: center; gap: 4px;">
+          <span class="heatmap-legend-cell" style="background: var(--bg-warm); border: 1px solid var(--gold-border);"></span> niedziela (sabbath)
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compendium -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Kompendium · osiągnięcia i trofea</div>
+      <div class="section-meta">zdobyte raz, zostają na zawsze</div>
+    </div>
+    <div class="compendium-card">
+      <div id="milestone-categories"></div>
+    </div>
+  </div>
+
+  <!-- Perks -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Drzewka mocy · perki postaci</div>
+      <div class="section-meta">odblokowane od poziomu kasowego 10</div>
+    </div>
+    <div class="perks-card">
+      <div class="perks-info-bar">
+        <span>Punkty perka dostępne: <strong id="perk-points">0</strong></span>
+        <span>Wydane: <strong id="perks-spent">0</strong></span>
+      </div>
+      <div class="perks-grid" id="perks-grid"></div>
+    </div>
+  </div>
+
+  <!-- Treasure ledger -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Skarbiec · kronika złota</div>
+      <div class="section-meta">co zarobione, co utracone, co wypłacone</div>
+    </div>
+    <div class="ledger-card">
+      <div class="ledger-summary">
+        <div class="ledger-stat">
+          <div class="ledger-stat-label">Łącznie zarobione</div>
+          <div class="ledger-stat-value green" id="ledger-earned">0 zł</div>
+        </div>
+        <div class="ledger-stat">
+          <div class="ledger-stat-label">Łącznie kar</div>
+          <div class="ledger-stat-value red" id="ledger-penalties">0 zł</div>
+        </div>
+        <div class="ledger-stat">
+          <div class="ledger-stat-label">Wypłacone na XTB</div>
+          <div class="ledger-stat-value muted" id="ledger-xtb">0 zł</div>
+        </div>
+        <div class="ledger-stat">
+          <div class="ledger-stat-label">Wypłacone na STS</div>
+          <div class="ledger-stat-value muted" id="ledger-sts">0 zł</div>
+        </div>
+      </div>
+      <div class="ledger-actions">
+        <button class="btn gold" id="withdraw-btn">Wypłać ze skarbca</button>
+      </div>
+      <div class="history-list" id="history-list"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Codex Gospodarza v3.0 · zbudowany dla Grzegorza Bardowskiego · Uniejowice</div>
+    <div class="footer-actions">
+      <button class="btn ghost btn-sm" id="settings-btn">Ustawienia</button>
+      <button class="btn ghost btn-sm" id="export-btn">Eksport JSON</button>
+      <button class="btn ghost btn-sm" id="import-btn">Import JSON</button>
+      <input type="file" id="import-file" accept="application/json" style="display:none">
+      <button class="btn danger btn-sm" id="reset-btn">Nowy sezon</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-title" id="modal-title">—</div>
+    <div class="modal-text" id="modal-text">—</div>
+    <div class="modal-form" id="modal-form" style="display: none;"></div>
+    <div class="modal-actions">
+      <button class="btn ghost btn-sm" id="modal-cancel">Anuluj</button>
+      <button class="btn primary btn-sm" id="modal-confirm">Potwierdzam</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// GAME CONFIG
+// ================================================================
+const START_WEIGHT = 118;
+const TARGET_WEIGHT = 90;
+const STRETCH_WEIGHT = 85;
+
+// Daily quests
+const DAILY_QUESTS = [
+  { id: 'wazenie',  name: 'Ważenie + wpis', hint: 'rytuał poranny',     reward: 0,   ritual: true },
+  { id: 'kroki',    name: '10 000 kroków',  hint: '',                    reward: 20 },
+  { id: 'kalorie',  name: 'Kalorie ≤ 2300-2400', hint: '+ bonus aktywności', reward: 50 },
+  { id: 'lozko',    name: 'Łóżko o 22:30',  hint: 'telefon odłożony',   reward: 20 },
+  { id: 'dzieci',   name: '30 min aktywnie z dziećmi', hint: 'bez ekranu', reward: 100 },
+  { id: 'czytanie', name: '30 min czytania', hint: 'książki, papier/Kindle', reward: 15 },
+];
+
+const DAILY_REPS_TRAINING = [
+  { id: 'pompki',    name: 'Pompka klasyczna', rate: 1.0,  unit: 'szt.' },
+  { id: 'przysiady', name: 'Przysiad',          rate: 0.5,  unit: 'szt.' },
+  { id: 'plank',     name: 'Plank',             rate: 1.0,  unit: '×10s' },
+  { id: 'brzuszki',  name: 'Brzuszek',          rate: 0.3,  unit: 'szt.' },
+];
+
+const DAILY_REPS_CARDIO = [
+  { id: 'marsz',  name: 'Marsz / bieżnia', rate: 5,  unit: 'km' },
+  { id: 'rower',  name: 'Rower',            rate: 1,  unit: 'km' },
+];
+
+// Weight level bonuses (1 kg = 1 weight level)
+// Start 118 kg → SETKA = level 19 (99 kg), CEL ROCZNY = level 28 (90 kg), STRETCH = level 33 (85 kg)
+const WEIGHT_LEVEL_BONUSES = [
+  null, // index 0 = unused
+  100, 200, 300, 400, 600, 700, 900, 1100, 1400, 1800,    // 1-10
+  2200, 2600, 3100, 3700, 4400, 5000, 5800, 6700,         // 11-18
+  15000,                                                    // 19 = SETKA (99 kg)
+  4000, 4500, 5000, 5500, 6000, 6800, 7500, 8500, 9500,   // 20-28 (28=CEL build-up)
+  20000,                                                    // 28 wait — we need 28 = 20000
+  // (placeholder — we re-fill below)
+];
+// Re-fill cleanly:
+WEIGHT_LEVEL_BONUSES.length = 0;
+WEIGHT_LEVEL_BONUSES.push(null);
+// Levels 1-10 (warm-up, woda + glikogen)
+WEIGHT_LEVEL_BONUSES.push(100, 200, 300, 400, 600, 700, 900, 1100, 1400, 1800);
+// Levels 11-18 (środkowa praca przed setką)
+WEIGHT_LEVEL_BONUSES.push(2200, 2600, 3100, 3700, 4400, 5000, 5800, 6700);
+// Level 19 = SETKA (99 kg) — magic moment
+WEIGHT_LEVEL_BONUSES.push(15000);
+// Levels 20-27 (po setce — najtrudniejszy odcinek)
+WEIGHT_LEVEL_BONUSES.push(4000, 4500, 5000, 5500, 6500, 7500, 8500, 9500);
+// Level 28 = CEL ROCZNY (90 kg) — magic moment
+WEIGHT_LEVEL_BONUSES.push(20000);
+// Levels 29-32 (stretch territory)
+WEIGHT_LEVEL_BONUSES.push(5000, 6000, 7000, 8000);
+// Level 33 = STRETCH (85 kg, BMI norma) — magic moment
+WEIGHT_LEVEL_BONUSES.push(12000);
+
+const WEIGHT_LEVEL_LEGENDARY = { 19: 'SETKA · 99 kg', 28: 'CEL ROCZNY · 90 kg', 33: 'STRETCH · 85 kg · BMI norma' };
+
+// Cash level XP needed
+function kasaXpNeeded(level) { return level * 1000; }
+
+// Cash level bonuses
+function kasaLevelBonus(level) {
+  const t = [, 100, 200, 300, 500, 700, 1000, 1400, 1800, 2500, 3000, 3000, 3000, 3000, 3000, 4000, 4000, 4000, 4000, 4000, 5000, 5000, 5000, 5000, 5000];
+  if (level <= 24) return t[level];
+  if (level <= 29) return 7500;
+  return 10000;
+}
+
+// Skalowana kara
+function penaltyAmount(kgAbove) {
+  if (kgAbove <= 0) return 0;
+  if (kgAbove <= 1) return 100;
+  if (kgAbove <= 2) return 250;
+  if (kgAbove <= 3) return 500;
+  if (kgAbove <= 4) return 800;
+  if (kgAbove <= 5) return 1200;
+  return 1200 + Math.round((kgAbove - 5) * 400);
+}
+
+// PR milestones (non-weight)
+const PR_MILESTONES = {
+  strength: {
+    name: 'PR siłowe · jednorazowe',
+    items: [
+      { id: 'pr30',     name: 'Pierwsze 30 pompek z rzędu (jedna seria)', reward: 600 },
+      { id: 'plank180', name: 'Plank 3 minuty bez przerwy',                reward: 1200 },
+      { id: 'sq100',    name: 'Pierwsze 100 przysiadów z rzędu',            reward: 1000 },
+    ]
+  },
+  health: {
+    name: 'Markery zdrowia · weryfikuje lab',
+    items: [
+      { id: 'homa',  name: 'HOMA-IR < 2,0 · wyjście z insulinooporności', reward: 10000, legendary: true },
+      { id: 'tg',    name: 'Trójglicerydy < 150 mg/dl · norma',            reward: 10000, legendary: true },
+    ]
+  }
+};
+
+// Perks
+const PERKS = [
+  { id: 'sila', icon: '💪', name: 'Siła',
+    tiers: [
+      { id: 's1', text: 'Stawka pompek 1.0 → 1.2 zł/szt.', boost: { reps: 'pompki', rateMul: 1.2 } },
+      { id: 's2', text: 'Stawka pompek → 1.5 zł/szt.', boost: { reps: 'pompki', rateMul: 1.5 } },
+      { id: 's3', text: 'Stawka pompek → 2.0 zł/szt. + przysiady ×1.5', boost: { reps: 'pompki', rateMul: 2.0, also: { przysiady: 1.5 } } },
+    ] },
+  { id: 'kondycja', icon: '🏃', name: 'Kondycja',
+    tiers: [
+      { id: 'k1', text: 'Stawka marszu 5 → 6 zł/km', boost: { reps: 'marsz', rateMul: 1.2 } },
+      { id: 'k2', text: 'Stawka marszu → 8 zł/km, rower ×2', boost: { reps: 'marsz', rateMul: 1.6, also: { rower: 2.0 } } },
+      { id: 'k3', text: 'Bonus 100 zł za dzień > 2h aktywności łącznie', boost: { dailyBonus: 'cardio2h' } },
+    ] },
+  { id: 'dieta', icon: '🍽️', name: 'Dieta',
+    tiers: [
+      { id: 'd1', text: 'Kalorie 50 → 60 zł', boost: { quest: 'kalorie', rewardDelta: 10 } },
+      { id: 'd2', text: 'Kalorie → 80 zł + bonus 200 zł za 7/7 dni tyg.', boost: { quest: 'kalorie', rewardDelta: 30, weeklyBonus: 'kalorie7' } },
+      { id: 'd3', text: 'Kara za wzrost wagi -50%', boost: { penaltyMultiplier: 0.5 } },
+    ] },
+  { id: 'rodzina', icon: '👨‍👧', name: 'Rodzina',
+    tiers: [
+      { id: 'r1', text: 'Z dziećmi 100 → 120 zł', boost: { quest: 'dzieci', rewardDelta: 20 } },
+      { id: 'r2', text: 'Z dziećmi → 140 zł', boost: { quest: 'dzieci', rewardDelta: 40 } },
+      { id: 'r3', text: 'Nowy quest: 30 min sam na sam z Anną · 50 zł/dzień', boost: { newQuest: 'anna' } },
+    ] },
+  { id: 'regeneracja', icon: '🛏️', name: 'Regeneracja',
+    tiers: [
+      { id: 'rg1', text: 'Łóżko 22:30 · 20 → 30 zł', boost: { quest: 'lozko', rewardDelta: 10 } },
+      { id: 'rg2', text: 'Łóżko 22:30 · → 45 zł', boost: { quest: 'lozko', rewardDelta: 25 } },
+      { id: 'rg3', text: 'Bonus 500 zł za 14 dni 22:30 z rzędu', boost: { streakBonus: 'lozko' } },
+    ] },
+  { id: 'medrzec', icon: '📖', name: 'Mędrzec',
+    tiers: [
+      { id: 'm1', text: 'Czytanie 15 → 20 zł', boost: { quest: 'czytanie', rewardDelta: 5 } },
+      { id: 'm2', text: 'Czytanie → 30 zł', boost: { quest: 'czytanie', rewardDelta: 15 } },
+      { id: 'm3', text: 'Nowy quest: 30 min nauki/projektu · 30 zł/dzień', boost: { newQuest: 'nauka' } },
+    ] },
+];
+
+const TITLES = [
+  { level: 1,  title: 'Nowicjusz' },
+  { level: 3,  title: 'Pretendent' },
+  { level: 5,  title: 'Wojownik świtu' },
+  { level: 8,  title: 'Niezłomny' },
+  { level: 12, title: 'Strażnik kondycji' },
+  { level: 16, title: 'Mistrz dyscypliny' },
+  { level: 20, title: 'Wybraniec' },
+  { level: 25, title: 'Legenda Uniejowic' },
+];
+
+// ================================================================
+// STATE
+// ================================================================
+let state = {
+  startDate: new Date().toISOString().split('T')[0],
+  weightLog: [],
+  dailyLog: {},        // { date: { questId: true } }
+  repsLog: {},         // { date: { repId: number } }
+  milestonesDone: {},  // { id: { date, reward, name } }
+  perksUnlocked: {},   // { tierId: { date } }
+  totalEarned: 0,      // current treasure (after withdrawals)
+  totalEarnedRaw: 0,   // total earned ever (positive only)
+  totalPenalties: 0,   // total penalty amount (positive number)
+  withdrawn: { xtb: 0, sts: 0, inne: 0 },
+  history: [],
+  minWeight: START_WEIGHT,
+  weightLevelBonusesGiven: {}, // { level: true }
+  kasaLevelBonusesGiven: {},   // { level: true }
+  reflections: {},     // { 'YYYY-WW': text }
+  pactSigned: false,
+};
+
+// ================================================================
+// STORAGE — localStorage (działa lokalnie, w przeglądarce)
+// ================================================================
+async function storeGet(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    return v !== null ? JSON.parse(v) : fallback;
+  } catch (e) {
+    console.error('Store get fail:', e);
+    return fallback;
+  }
+}
+async function storeSet(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.error('Store set fail:', e);
+    if (e.name === 'QuotaExceededError') {
+      alert('Pamięć przeglądarki pełna. Zrób eksport JSON i wyczyść storage.');
+    }
+  }
+}
+
+async function loadState() {
+  state.startDate         = await storeGet('v3_startDate', state.startDate);
+  state.weightLog         = await storeGet('v3_weightLog', []);
+  state.dailyLog          = await storeGet('v3_dailyLog', {});
+  state.repsLog           = await storeGet('v3_repsLog', {});
+  state.milestonesDone    = await storeGet('v3_milestonesDone', {});
+  state.perksUnlocked     = await storeGet('v3_perksUnlocked', {});
+  state.totalEarned       = await storeGet('v3_totalEarned', 0);
+  state.totalEarnedRaw    = await storeGet('v3_totalEarnedRaw', 0);
+  state.totalPenalties    = await storeGet('v3_totalPenalties', 0);
+  state.withdrawn         = await storeGet('v3_withdrawn', { xtb: 0, sts: 0, inne: 0 });
+  state.history           = await storeGet('v3_history', []);
+  state.minWeight         = await storeGet('v3_minWeight', START_WEIGHT);
+  state.weightLevelBonusesGiven = await storeGet('v3_wlbg', {});
+  state.kasaLevelBonusesGiven   = await storeGet('v3_klbg', {});
+  state.reflections       = await storeGet('v3_reflections', {});
+  state.pactSigned        = await storeGet('v3_pactSigned', false);
+}
+
+async function saveState() {
+  await storeSet('v3_startDate', state.startDate);
+  await storeSet('v3_weightLog', state.weightLog);
+  await storeSet('v3_dailyLog', state.dailyLog);
+  await storeSet('v3_repsLog', state.repsLog);
+  await storeSet('v3_milestonesDone', state.milestonesDone);
+  await storeSet('v3_perksUnlocked', state.perksUnlocked);
+  await storeSet('v3_totalEarned', state.totalEarned);
+  await storeSet('v3_totalEarnedRaw', state.totalEarnedRaw);
+  await storeSet('v3_totalPenalties', state.totalPenalties);
+  await storeSet('v3_withdrawn', state.withdrawn);
+  await storeSet('v3_history', state.history);
+  await storeSet('v3_minWeight', state.minWeight);
+  await storeSet('v3_wlbg', state.weightLevelBonusesGiven);
+  await storeSet('v3_klbg', state.kasaLevelBonusesGiven);
+  await storeSet('v3_reflections', state.reflections);
+  await storeSet('v3_pactSigned', state.pactSigned);
+}
+
+// ================================================================
+// HELPERS
+// ================================================================
+function todayKey() { return new Date().toISOString().split('T')[0]; }
+function fmtDate(iso) { return new Date(iso).toLocaleDateString('pl-PL', { day: '2-digit', month: 'short' }); }
+function daysBetween(a, b) { return Math.floor((new Date(b) - new Date(a)) / 86400000); }
+function isSunday(date = new Date()) { return date.getDay() === 0; }
+
+function currentWeight() {
+  if (state.weightLog.length === 0) return START_WEIGHT;
+  return state.weightLog[state.weightLog.length - 1].weight;
+}
+
+function weightLost() {
+  return Math.max(0, START_WEIGHT - state.minWeight);
+}
+
+function calcKasaLevel() {
+  const xp = state.totalEarnedRaw;
+  let level = 1, acc = 0;
+  while (acc + kasaXpNeeded(level) <= xp) { acc += kasaXpNeeded(level); level++; }
+  return level;
+}
+
+function calcKasaXpProgress() {
+  const xp = state.totalEarnedRaw;
+  const level = calcKasaLevel();
+  let acc = 0;
+  for (let i = 1; i < level; i++) acc += kasaXpNeeded(i);
+  const inLevel = xp - acc;
+  const needed = kasaXpNeeded(level);
+  return { current: inLevel, needed, pct: Math.min(100, (inLevel / needed) * 100) };
+}
+
+function calcWeightLevel() { return Math.floor(weightLost()); }
+
+function calcStreak() {
+  const today = todayKey();
+  const dates = Object.keys(state.dailyLog).sort();
+  if (dates.length === 0) return 0;
+  let streak = 0;
+  let cursor = new Date(today);
+  for (let i = 0; i < 400; i++) {
+    const key = cursor.toISOString().split('T')[0];
+    const entry = state.dailyLog[key];
+    if (entry && entry.wazenie) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    } else {
+      // Sunday is sabbath - skip without breaking streak
+      const isSun = cursor.getDay() === 0;
+      if (key === today && streak === 0) {
+        cursor.setDate(cursor.getDate() - 1);
+        continue;
+      }
+      if (isSun) {
+        cursor.setDate(cursor.getDate() - 1);
+        continue;
+      }
+      break;
+    }
+  }
+  return streak;
+}
+
+function calcTitle(level) {
+  let t = 'Nowicjusz';
+  TITLES.forEach(e => { if (level >= e.level) t = e.title; });
+  return t;
+}
+
+function perkPoints() {
+  const level = calcKasaLevel();
+  return Math.max(0, level - 9);
+}
+function perksSpent() { return Object.keys(state.perksUnlocked).length; }
+
+function questReward(quest) {
+  let reward = quest.reward;
+  PERKS.forEach(perk => {
+    perk.tiers.forEach(tier => {
+      if (state.perksUnlocked[tier.id] && tier.boost.quest === quest.id) {
+        reward += tier.boost.rewardDelta;
+      }
+    });
+  });
+  return reward;
+}
+
+function repRate(rep) {
+  let rate = rep.rate;
+  PERKS.forEach(perk => {
+    perk.tiers.forEach(tier => {
+      if (state.perksUnlocked[tier.id]) {
+        if (tier.boost.reps === rep.id && tier.boost.rateMul) {
+          rate = rep.rate * tier.boost.rateMul;
+        }
+        if (tier.boost.also && tier.boost.also[rep.id]) {
+          rate = rep.rate * tier.boost.also[rep.id];
+        }
+      }
+    });
+  });
+  return rate;
+}
+
+function getPenaltyMultiplier() {
+  let mult = 1;
+  PERKS.forEach(perk => {
+    perk.tiers.forEach(tier => {
+      if (state.perksUnlocked[tier.id] && tier.boost.penaltyMultiplier !== undefined) {
+        mult = tier.boost.penaltyMultiplier;
+      }
+    });
+  });
+  return mult;
+}
+
+// History helpers
+function awardEarning(amount, name, sourceId, opts = {}) {
+  state.totalEarned += amount;
+  if (amount > 0) state.totalEarnedRaw += amount;
+  if (amount < 0) state.totalPenalties += Math.abs(amount);
+  state.history.push({
+    id: 'h_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    name, reward: amount, date: todayKey(), sourceId,
+    legendary: !!opts.legendary,
+    type: opts.type || 'earn',
+  });
+}
+function removeEarningBySourceId(sourceId) {
+  for (let i = state.history.length - 1; i >= 0; i--) {
+    if (state.history[i].sourceId === sourceId) {
+      const rec = state.history[i];
+      state.totalEarned -= rec.reward;
+      if (rec.reward > 0) state.totalEarnedRaw -= rec.reward;
+      if (rec.reward < 0) state.totalPenalties -= Math.abs(rec.reward);
+      state.history.splice(i, 1);
+      return rec;
+    }
+  }
+  return null;
+}
+
+// Check level-up bonuses (called after every earning)
+async function checkLevelBonuses() {
+  let granted = [];
+
+  // Kasa level
+  const currentKasaLevel = calcKasaLevel();
+  for (let lvl = 2; lvl <= currentKasaLevel; lvl++) {
+    if (!state.kasaLevelBonusesGiven[lvl]) {
+      state.kasaLevelBonusesGiven[lvl] = true;
+      const bonus = kasaLevelBonus(lvl);
+      awardEarning(bonus, `🎖 Awans · poziom kasowy ${lvl}`, 'klb_' + lvl, { type: 'levelup' });
+      granted.push({ kind: 'kasa', level: lvl, bonus });
+    }
+  }
+
+  // Weight level
+  const currentWLevel = calcWeightLevel();
+  for (let lvl = 1; lvl <= currentWLevel; lvl++) {
+    if (!state.weightLevelBonusesGiven[lvl]) {
+      state.weightLevelBonusesGiven[lvl] = true;
+      const bonus = WEIGHT_LEVEL_BONUSES[lvl] || 0;
+      const isLegendary = WEIGHT_LEVEL_LEGENDARY[lvl];
+      const name = isLegendary
+        ? `👑 ${isLegendary} · ${bonus.toLocaleString('pl-PL')} zł`
+        : `⚖ Schudniętych ${lvl} kg · poziom wagowy ${lvl}`;
+      awardEarning(bonus, name, 'wlb_' + lvl, { type: 'levelup', legendary: !!isLegendary });
+      granted.push({ kind: 'weight', level: lvl, bonus, legendary: !!isLegendary });
+    }
+  }
+
+  return granted;
+}
+
+// ================================================================
+// RENDER
+// ================================================================
+function renderBanner() {
+  const days = daysBetween(state.startDate, todayKey()) + 1;
+  document.getElementById('day-counter').textContent = days;
+  document.getElementById('streak-display').textContent = calcStreak();
+  document.getElementById('title-display').textContent = calcTitle(calcKasaLevel());
+
+  document.getElementById('treasure-display').textContent = state.totalEarned.toLocaleString('pl-PL');
+  const totalWithdrawn = state.withdrawn.xtb + state.withdrawn.sts + state.withdrawn.inne;
+  document.getElementById('treasure-sub').textContent =
+    `${state.totalEarnedRaw.toLocaleString('pl-PL')} zarobione · ${totalWithdrawn.toLocaleString('pl-PL')} wypłacone`;
+
+  // Levels
+  const kp = calcKasaXpProgress();
+  document.getElementById('kasa-level').textContent = calcKasaLevel();
+  document.getElementById('kasa-xp-current').textContent = Math.floor(kp.current).toLocaleString('pl-PL');
+  document.getElementById('kasa-xp-needed').textContent = kp.needed.toLocaleString('pl-PL');
+  document.getElementById('kasa-fill').style.width = kp.pct + '%';
+
+  const wLevel = calcWeightLevel();
+  const wLost = weightLost();
+  document.getElementById('weight-level').textContent = wLevel;
+  document.getElementById('weight-lost-display').textContent = wLost.toFixed(1);
+  document.getElementById('weight-fill').style.width = Math.min(100, (wLost / 28) * 100) + '%';
+
+  document.getElementById('today-date').textContent =
+    new Date().toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+function renderTodayBars() {
+  const today = todayKey();
+  const todayEntry = state.dailyLog[today] || {};
+  const todayReps = state.repsLog[today] || {};
+
+  // Quests bar
+  const totalQuests = DAILY_QUESTS.length;
+  const doneQuests = DAILY_QUESTS.filter(q => todayEntry[q.id]).length;
+  const questsPct = (doneQuests / totalQuests) * 100;
+  document.getElementById('bar-quests').textContent = `${doneQuests} / ${totalQuests}`;
+  document.getElementById('bar-quests-pct').textContent = Math.round(questsPct) + '%';
+  document.getElementById('bar-quests-fill').style.width = questsPct + '%';
+  let earnedToday = 0;
+  DAILY_QUESTS.forEach(q => { if (todayEntry[q.id]) earnedToday += questReward(q); });
+  document.getElementById('bar-quests-foot').textContent = earnedToday + ' zł zarobione · ' + (todayEntry['kalorie'] ? '✓ kalorie' : '○ kalorie') + ' · ' + (todayEntry['lozko'] ? '✓ łóżko' : '○ łóżko');
+
+  // Reps training bar
+  let repsTrainEarned = 0;
+  DAILY_REPS_TRAINING.forEach(r => {
+    const v = todayReps[r.id] || 0;
+    repsTrainEarned += v * repRate(r);
+  });
+  document.getElementById('bar-reps-train').textContent = Math.round(repsTrainEarned) + ' zł';
+  // Show as % of "soft target" 100 zł (visual reference)
+  const trainPct = Math.min(100, (repsTrainEarned / 100) * 100);
+  document.getElementById('bar-reps-train-fill').style.width = trainPct + '%';
+  let trainSummary = [];
+  DAILY_REPS_TRAINING.forEach(r => {
+    const v = todayReps[r.id] || 0;
+    if (v > 0) trainSummary.push(`${v} ${r.name.toLowerCase()}`);
+  });
+  document.getElementById('bar-reps-train-foot').textContent = trainSummary.length > 0 ? trainSummary.join(' · ') : 'jeszcze nic dziś';
+
+  // Steps bar (manual estimate from quest)
+  const stepsValue = todayEntry['kroki'] ? 10000 : 0;
+  document.getElementById('bar-steps').textContent = stepsValue.toLocaleString('pl-PL') + ' / 10 000';
+  document.getElementById('bar-steps-pct').textContent = stepsValue >= 10000 ? '100%' : '?';
+  document.getElementById('bar-steps-fill').style.width = stepsValue >= 10000 ? '100%' : '0%';
+}
+
+function renderTodoList() {
+  const today = todayKey();
+  const todayEntry = state.dailyLog[today] || {};
+  const pendingDiv = document.getElementById('todo-pending');
+  const doneDiv = document.getElementById('todo-done');
+  pendingDiv.innerHTML = '';
+  doneDiv.innerHTML = '';
+
+  let pendingSum = 0;
+  let hasDone = false;
+
+  DAILY_QUESTS.forEach(q => {
+    const completed = !!todayEntry[q.id];
+    const reward = questReward(q);
+    const item = document.createElement('div');
+    item.className = 'todo-item' + (completed ? ' done' : '');
+    item.innerHTML = `
+      <div class="todo-circle"></div>
+      <div class="todo-name">${q.name}${q.hint ? `<span class="hint">· ${q.hint}</span>` : ''}</div>
+      <div class="todo-reward">${q.ritual ? 'rytuał' : (completed ? '+' + reward + ' zł ✓' : '+' + reward + ' zł')}</div>
+    `;
+    item.addEventListener('click', () => toggleQuest(q));
+    if (completed) {
+      hasDone = true;
+      doneDiv.appendChild(item);
+    } else {
+      if (!q.ritual) pendingSum += reward;
+      pendingDiv.appendChild(item);
+    }
+  });
+
+  document.getElementById('todo-done-section-title').style.display = hasDone ? 'block' : 'none';
+  document.getElementById('todo-pending-sum').textContent = pendingSum + ' zł';
+}
+
+function renderWeight() {
+  const cw = currentWeight();
+  document.getElementById('current-weight').textContent = cw.toFixed(1);
+  const lost = START_WEIGHT - cw;
+  const deltaEl = document.getElementById('weight-delta-text');
+  if (Math.abs(lost) < 0.05) {
+    deltaEl.textContent = '— od startu';
+    deltaEl.className = 'weight-delta zero';
+  } else if (lost > 0) {
+    deltaEl.textContent = '↓ ' + lost.toFixed(1) + ' kg od startu';
+    deltaEl.className = 'weight-delta';
+  } else {
+    deltaEl.textContent = '↑ ' + Math.abs(lost).toFixed(1) + ' kg od startu';
+    deltaEl.className = 'weight-delta up';
+  }
+
+  // Progress to goal
+  const lostFromMin = Math.max(0, START_WEIGHT - state.minWeight);
+  document.getElementById('weight-progress-text').textContent = lostFromMin.toFixed(1) + ' / 28.0 kg';
+  document.getElementById('weight-progress-fill').style.width = Math.min(100, (lostFromMin / 28) * 100) + '%';
+
+  // Penalty notice
+  const notice = document.getElementById('penalty-card');
+  if (state.minWeight < START_WEIGHT) {
+    notice.classList.add('show');
+    document.getElementById('min-weight-display').textContent = state.minWeight.toFixed(1) + ' kg';
+  } else {
+    notice.classList.remove('show');
+  }
+
+  // Chart stat
+  const chartStat = document.getElementById('weight-chart-stat');
+  if (state.weightLog.length >= 2) {
+    const recent = state.weightLog.slice(-7);
+    const delta = recent[recent.length-1].weight - recent[0].weight;
+    chartStat.innerHTML = `${cw.toFixed(1)} kg <span class="delta ${delta > 0 ? 'up' : ''}">${delta >= 0 ? '↑' : '↓'} ${Math.abs(delta).toFixed(1)}</span>`;
+  } else {
+    chartStat.textContent = cw.toFixed(1) + ' kg';
+  }
+
+  renderWeightChart();
+}
+
+function renderWeightChart() {
+  const svg = document.getElementById('weight-chart');
+  svg.innerHTML = '';
+  const log = state.weightLog;
+  const W = 600, H = 140, PAD_Y = 18, PAD_X = 12;
+
+  if (log.length === 0) {
+    const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    txt.setAttribute('x', '50%');
+    txt.setAttribute('y', '50%');
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('fill', '#8B8675');
+    txt.setAttribute('font-style', 'italic');
+    txt.setAttribute('font-size', '13');
+    txt.textContent = 'Wpisz pierwsze ważenie';
+    svg.appendChild(txt);
+    return;
+  }
+
+  const allW = log.map(e => e.weight);
+  const maxW = Math.max(...allW, START_WEIGHT) + 0.5;
+  const minW = Math.min(...allW, TARGET_WEIGHT) - 0.5;
+  const range = Math.max(1, maxW - minW);
+
+  // Defs
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = `<linearGradient id="sparkV3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B8860B" stop-opacity="0.3"/><stop offset="100%" stop-color="#B8860B" stop-opacity="0"/></linearGradient>`;
+  svg.appendChild(defs);
+
+  // Target line
+  function drawTarget(weight, color, label) {
+    const y = PAD_Y + ((maxW - weight) / range) * (H - 2*PAD_Y);
+    if (y < 0 || y > H) return;
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', PAD_X); line.setAttribute('x2', W - PAD_X);
+    line.setAttribute('y1', y); line.setAttribute('y2', y);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-dasharray', '3 3');
+    line.setAttribute('stroke-width', '0.8');
+    line.setAttribute('opacity', '0.5');
+    svg.appendChild(line);
+    const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    lbl.setAttribute('x', W - PAD_X);
+    lbl.setAttribute('y', y - 3);
+    lbl.setAttribute('text-anchor', 'end');
+    lbl.setAttribute('fill', color);
+    lbl.setAttribute('font-family', 'JetBrains Mono');
+    lbl.setAttribute('font-size', '9');
+    lbl.textContent = label;
+    svg.appendChild(lbl);
+  }
+  drawTarget(TARGET_WEIGHT, '#2D6E47', 'cel · 90 kg');
+  if (log.length > 5) drawTarget(99, '#D68A3F', 'setka · 99 kg');
+
+  // Points
+  const xStep = log.length > 1 ? (W - 2*PAD_X) / (log.length - 1) : 0;
+  const pts = log.map((e, i) => {
+    const x = PAD_X + i * xStep;
+    const y = PAD_Y + ((maxW - e.weight) / range) * (H - 2*PAD_Y);
+    return [x, y];
+  });
+
+  if (log.length > 1) {
+    // Area
+    const area = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    let d = `M ${pts[0][0]} ${H - PAD_Y} `;
+    pts.forEach(([x, y]) => d += `L ${x} ${y} `);
+    d += `L ${pts[pts.length-1][0]} ${H - PAD_Y} Z`;
+    area.setAttribute('d', d);
+    area.setAttribute('fill', 'url(#sparkV3)');
+    svg.appendChild(area);
+
+    // Line
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    let pd = `M ${pts[0][0]} ${pts[0][1]} `;
+    pts.slice(1).forEach(([x, y]) => pd += `L ${x} ${y} `);
+    path.setAttribute('d', pd);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', '#B8860B');
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(path);
+  }
+
+  // Dots
+  pts.forEach(([x, y]) => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', '3');
+    c.setAttribute('fill', '#B8860B'); c.setAttribute('stroke', '#FAFAF7'); c.setAttribute('stroke-width', '1.5');
+    svg.appendChild(c);
+  });
+}
+
+function renderKPIs() {
+  // Pompki total
+  let pushupsTotal = 0;
+  let pushupsToday = 0;
+  Object.entries(state.repsLog).forEach(([date, reps]) => {
+    pushupsTotal += reps.pompki || 0;
+    if (date === todayKey()) pushupsToday = reps.pompki || 0;
+  });
+  document.getElementById('kpi-pushups').textContent = pushupsTotal.toLocaleString('pl-PL');
+  document.getElementById('kpi-pushups-delta').textContent = pushupsToday > 0 ? '↑ ' + pushupsToday + ' dziś' : '— dziś';
+  document.getElementById('kpi-pushups-delta').className = pushupsToday > 0 ? 'kpi-delta up' : 'kpi-delta neutral';
+
+  // Km total
+  let kmTotal = 0;
+  Object.values(state.repsLog).forEach(reps => {
+    kmTotal += (reps.marsz || 0) + (reps.rower || 0);
+  });
+  document.getElementById('kpi-km').innerHTML = kmTotal.toFixed(1) + '<span class="kpi-unit">km</span>';
+
+  // Children days
+  let childrenDays = 0;
+  Object.values(state.dailyLog).forEach(d => { if (d.dzieci) childrenDays++; });
+  document.getElementById('kpi-children').textContent = childrenDays;
+
+  // Milestones (count weight + PR + health)
+  const totalMilestones = WEIGHT_LEVEL_BONUSES.length - 1 + PR_MILESTONES.strength.items.length + PR_MILESTONES.health.items.length;
+  const doneWeight = Object.keys(state.weightLevelBonusesGiven).length;
+  const donePR = Object.keys(state.milestonesDone).length;
+  document.getElementById('kpi-milestones').innerHTML = (doneWeight + donePR) + '<span class="kpi-unit">/ ' + totalMilestones + '</span>';
+}
+
+function renderReps() {
+  const today = todayKey();
+  const todayReps = state.repsLog[today] || {};
+  const isSundayToday = isSunday();
+
+  function renderGroup(group, containerId, totalElId, headerSelector) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    let groupEarned = 0;
+
+    group.forEach(rep => {
+      const value = todayReps[rep.id] || 0;
+      const rate = repRate(rep);
+      const earned = isSundayToday ? 0 : value * rate;
+      groupEarned += earned;
+
+      const el = document.createElement('div');
+      el.className = 'rep-card' + (value > 0 ? ' has-value' : '') + (isSundayToday ? ' locked' : '');
+      el.innerHTML = `
+        <div class="rep-head">
+          <div class="rep-name">${rep.name}</div>
+          <div class="rep-rate">${rate.toFixed(1)} zł / ${rep.unit}</div>
+        </div>
+        <div class="rep-input-row">
+          <input type="number" min="0" step="${rep.unit === 'km' ? '0.1' : '1'}" class="rep-input" data-rep="${rep.id}" placeholder="${isSundayToday ? 'sabbath' : '+ ile?'}" ${isSundayToday ? 'disabled' : ''}>
+          <button class="rep-add-btn" data-add="${rep.id}" ${isSundayToday ? 'disabled' : ''}>+</button>
+        </div>
+        <div class="rep-stats">
+          <span>Dziś: <strong>${value.toFixed(rep.unit === 'km' ? 1 : 0)} ${rep.unit}</strong></span>
+          <span class="${isSundayToday ? 'locked-text' : 'earned'}">${isSundayToday ? 'sabbath' : '+' + earned.toFixed(0) + ' zł'}</span>
+        </div>
+      `;
+      container.appendChild(el);
+    });
+
+    document.getElementById(totalElId).textContent = isSundayToday ? 'sabbath · 0 zł' : groupEarned.toFixed(0) + ' zł dziś';
+
+    container.querySelectorAll('.rep-add-btn[data-add]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const repId = btn.getAttribute('data-add');
+        const input = container.querySelector(`.rep-input[data-rep="${repId}"]`);
+        const val = parseFloat(input.value);
+        if (!val || val <= 0) return;
+        addRep(repId, val);
+        input.value = '';
+      });
+    });
+    container.querySelectorAll('.rep-input').forEach(input => {
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          const repId = input.getAttribute('data-rep');
+          const val = parseFloat(input.value);
+          if (val && val > 0) { addRep(repId, val); input.value = ''; }
+        }
+      });
+    });
+  }
+
+  renderGroup(DAILY_REPS_TRAINING, 'reps-training-grid', 'reps-train-total');
+  renderGroup(DAILY_REPS_CARDIO, 'reps-cardio-grid', 'reps-cardio-total');
+}
+
+function renderHeatmap() {
+  const grid = document.getElementById('heatmap-grid');
+  grid.innerHTML = '';
+  const startD = new Date(state.startDate);
+  const todayD = new Date(todayKey());
+
+  // Group earnings by date
+  const earnedByDate = {};
+  state.history.forEach(h => {
+    if (h.reward > 0 && h.type !== 'levelup') {
+      earnedByDate[h.date] = (earnedByDate[h.date] || 0) + h.reward;
+    }
+  });
+
+  let activeDays = 0;
+  for (let i = 0; i < 365; i++) {
+    const cellDate = new Date(startD);
+    cellDate.setDate(startD.getDate() + i);
+    const cellKey = cellDate.toISOString().split('T')[0];
+    const earned = earnedByDate[cellKey] || 0;
+    const isFuture = cellDate > todayD;
+    const isToday = cellKey === todayKey();
+    const isSun = cellDate.getDay() === 0;
+
+    const cell = document.createElement('div');
+    let cls = 'heatmap-cell';
+    if (isFuture) cls += ' future';
+    else if (isSun && earned === 0) cls += ' sabbath';
+    else if (earned > 0) {
+      activeDays++;
+      if (earned < 50) cls += ' l1';
+      else if (earned < 150) cls += ' l2';
+      else if (earned < 300) cls += ' l3';
+      else cls += ' l4';
+    }
+    if (isToday) cls += ' today';
+    cell.className = cls;
+    cell.title = `${cellDate.toLocaleDateString('pl-PL')} · ${earned.toFixed(0)} zł`;
+    grid.appendChild(cell);
+  }
+
+  document.getElementById('heatmap-stat').textContent = activeDays + ' / 365 dni aktywnych';
+}
+
+function renderMilestones() {
+  const wrap = document.getElementById('milestone-categories');
+  wrap.innerHTML = '';
+
+  // Weight milestones (auto from weight log)
+  const weightCat = document.createElement('div');
+  weightCat.className = 'milestone-cat open';
+  const weightDone = Object.keys(state.weightLevelBonusesGiven).length;
+  weightCat.innerHTML = `
+    <div class="milestone-cat-head">
+      <div class="milestone-cat-name">⚖ Postęp wagowy · automatycznie</div>
+      <div class="milestone-cat-progress"><strong>${weightDone}</strong> / 33 zdobyte</div>
+    </div>
+    <div class="milestone-cat-list" id="weight-milestone-list"></div>
+  `;
+  wrap.appendChild(weightCat);
+  weightCat.querySelector('.milestone-cat-head').addEventListener('click', () => weightCat.classList.toggle('open'));
+
+  const wList = weightCat.querySelector('#weight-milestone-list');
+  for (let lvl = 1; lvl <= 33; lvl++) {
+    const targetWeight = START_WEIGHT - lvl;
+    const isDone = !!state.weightLevelBonusesGiven[lvl];
+    const isReachable = currentWeight() <= targetWeight;
+    const isLocked = !isReachable && !isDone;
+    const bonus = WEIGHT_LEVEL_BONUSES[lvl];
+    const legendary = WEIGHT_LEVEL_LEGENDARY[lvl];
+
+    const row = document.createElement('div');
+    row.className = 'milestone-row' + (isDone ? ' completed' : '') + (isLocked ? ' locked' : '') + (legendary ? ' legendary' : '');
+    row.innerHTML = `
+      <div class="milestone-cb"></div>
+      <div>${legendary ? `<span class="milestone-icon">★</span>` : ''}-${lvl} kg · ${targetWeight} kg${legendary ? ' · ' + legendary : ''}</div>
+      <div class="milestone-reward">${bonus.toLocaleString('pl-PL')} zł</div>
+    `;
+    wList.appendChild(row);
+  }
+
+  // PR milestones
+  Object.entries(PR_MILESTONES).forEach(([catId, cat]) => {
+    const completed = cat.items.filter(it => state.milestonesDone[it.id]).length;
+    const catEl = document.createElement('div');
+    catEl.className = 'milestone-cat';
+    catEl.innerHTML = `
+      <div class="milestone-cat-head">
+        <div class="milestone-cat-name">${cat.name}</div>
+        <div class="milestone-cat-progress"><strong>${completed}</strong> / ${cat.items.length} zdobyte</div>
+      </div>
+      <div class="milestone-cat-list"></div>
+    `;
+    catEl.querySelector('.milestone-cat-head').addEventListener('click', () => catEl.classList.toggle('open'));
+    const list = catEl.querySelector('.milestone-cat-list');
+    cat.items.forEach(it => {
+      const isDone = !!state.milestonesDone[it.id];
+      const row = document.createElement('div');
+      row.className = 'milestone-row' + (isDone ? ' completed' : '') + (it.legendary ? ' legendary' : '');
+      row.innerHTML = `
+        <div class="milestone-cb"></div>
+        <div>${it.legendary ? '<span class="milestone-icon">★</span>' : ''}${it.name}</div>
+        <div class="milestone-reward">${it.reward.toLocaleString('pl-PL')} zł</div>
+      `;
+      row.addEventListener('click', () => togglePRMilestone(it));
+      list.appendChild(row);
+    });
+    wrap.appendChild(catEl);
+  });
+}
+
+function renderPerks() {
+  const wrap = document.getElementById('perks-grid');
+  wrap.innerHTML = '';
+  const points = perkPoints();
+  const spent = perksSpent();
+  const available = points - spent;
+  document.getElementById('perk-points').textContent = available;
+  document.getElementById('perks-spent').textContent = spent;
+
+  PERKS.forEach(perk => {
+    const tree = document.createElement('div');
+    tree.className = 'perk-tree';
+    const head = `<div class="perk-tree-head"><div class="perk-tree-icon">${perk.icon}</div><div class="perk-tree-name">${perk.name}</div></div>`;
+    let tiers = '';
+    perk.tiers.forEach((tier, i) => {
+      const taken = !!state.perksUnlocked[tier.id];
+      const prevTaken = i === 0 || !!state.perksUnlocked[perk.tiers[i-1].id];
+      const locked = !taken && (!prevTaken || available <= 0);
+      tiers += `<div class="perk-tier ${taken ? 'taken' : ''} ${locked ? 'locked' : ''}" data-perk="${perk.id}" data-tier="${tier.id}">
+        <div class="perk-tier-num">${i+1}</div>
+        <div class="perk-tier-text">${tier.text}</div>
+      </div>`;
+    });
+    tree.innerHTML = head + tiers;
+    wrap.appendChild(tree);
+
+    tree.querySelectorAll('.perk-tier').forEach(el => {
+      if (!el.classList.contains('taken') && !el.classList.contains('locked')) {
+        el.addEventListener('click', () => {
+          const perkId = el.getAttribute('data-perk');
+          const tierId = el.getAttribute('data-tier');
+          unlockPerk(perkId, tierId);
+        });
+      }
+    });
+  });
+}
+
+function renderLedger() {
+  document.getElementById('ledger-earned').textContent = state.totalEarnedRaw.toLocaleString('pl-PL') + ' zł';
+  document.getElementById('ledger-penalties').textContent = '-' + state.totalPenalties.toLocaleString('pl-PL') + ' zł';
+  document.getElementById('ledger-xtb').textContent = state.withdrawn.xtb.toLocaleString('pl-PL') + ' zł';
+  document.getElementById('ledger-sts').textContent = state.withdrawn.sts.toLocaleString('pl-PL') + ' zł';
+
+  const list = document.getElementById('history-list');
+  list.innerHTML = '';
+  const recent = state.history.slice(-50).reverse();
+  if (recent.length === 0) {
+    list.innerHTML = '<div class="history-empty">Skarbiec pusty. Pierwsze zdarzenie wypełni go.</div>';
+    return;
+  }
+  recent.forEach(h => {
+    let cls = 'history-item';
+    let iconCls = 'up';
+    if (h.reward < 0) { cls += ' penalty'; iconCls = 'down'; }
+    if (h.legendary) { cls += ' legendary'; iconCls = 'legendary'; }
+    if (h.type === 'withdraw') { cls += ' withdraw'; iconCls = 'withdraw'; }
+    const sign = h.reward >= 0 ? '+' : '';
+    const el = document.createElement('div');
+    el.className = cls;
+    el.innerHTML = `
+      <div class="history-icon ${iconCls}"></div>
+      <div class="history-info">
+        <div class="history-name">${h.name}</div>
+        <div class="history-meta">${fmtDate(h.date)}</div>
+      </div>
+      <div class="history-amount">${sign}${h.reward.toLocaleString('pl-PL')} zł</div>
+    `;
+    list.appendChild(el);
+  });
+}
+
+function renderSabbathBanner() {
+  const sb = document.getElementById('sabbath-banner');
+  if (isSunday()) sb.classList.add('show');
+  else sb.classList.remove('show');
+}
+
+function renderAll() {
+  renderBanner();
+  renderTodayBars();
+  renderTodoList();
+  renderWeight();
+  renderKPIs();
+  renderReps();
+  renderHeatmap();
+  renderMilestones();
+  renderPerks();
+  renderLedger();
+  renderSabbathBanner();
+}
+
+// ================================================================
+// ACTIONS
+// ================================================================
+async function toggleQuest(quest) {
+  const today = todayKey();
+  if (!state.dailyLog[today]) state.dailyLog[today] = {};
+  const wasDone = !!state.dailyLog[today][quest.id];
+  const reward = questReward(quest);
+
+  if (wasDone) {
+    delete state.dailyLog[today][quest.id];
+    if (!quest.ritual) removeEarningBySourceId('q_' + quest.id + '_' + today);
+  } else {
+    state.dailyLog[today][quest.id] = true;
+    if (!quest.ritual) {
+      awardEarning(reward, quest.name, 'q_' + quest.id + '_' + today);
+      const granted = await checkLevelBonuses();
+      await saveState();
+      renderAll();
+      granted.forEach(g => {
+        if (g.kind === 'kasa') showToast(`Awans · poziom kasowy ${g.level} · +${g.bonus} zł`, 'gold');
+        else if (g.legendary) showToast(`★ ${WEIGHT_LEVEL_LEGENDARY[g.level]} · +${g.bonus.toLocaleString('pl-PL')} zł`, 'legendary');
+        else showToast(`Schudniętych ${g.level} kg · +${g.bonus} zł`, 'green');
+      });
+      if (granted.length === 0) showToast(`+${reward} zł · ${quest.name}`, 'green');
+      return;
+    } else {
+      showToast('Rytuał wpisany', 'gold');
+    }
+  }
+
+  await saveState();
+  renderAll();
+}
+
+async function addRep(repId, value) {
+  if (isSunday()) {
+    showToast('Niedziela — daily reps wyłączone', 'gold');
+    return;
+  }
+  const allReps = [...DAILY_REPS_TRAINING, ...DAILY_REPS_CARDIO];
+  const rep = allReps.find(r => r.id === repId);
+  if (!rep) return;
+  const today = todayKey();
+  if (!state.repsLog[today]) state.repsLog[today] = {};
+  const currentValue = state.repsLog[today][repId] || 0;
+  const rate = repRate(rep);
+  const newValue = currentValue + value;
+  state.repsLog[today][repId] = newValue;
+
+  const earnedDelta = value * rate;
+  awardEarning(
+    Math.round(earnedDelta * 10) / 10,
+    `${rep.name} · +${value} ${rep.unit}`,
+    'r_' + repId + '_' + today + '_' + Date.now()
+  );
+  const granted = await checkLevelBonuses();
+  await saveState();
+  renderAll();
+  granted.forEach(g => {
+    if (g.kind === 'kasa') showToast(`Awans · poziom kasowy ${g.level} · +${g.bonus} zł`, 'gold');
+  });
+  if (granted.length === 0) showToast(`+${earnedDelta.toFixed(1)} zł · ${rep.name}`, 'green');
+}
+
+async function logWeight() {
+  const input = document.getElementById('weight-input');
+  const w = parseFloat(input.value);
+  if (!w || w < 50 || w > 250) {
+    showToast('Nieprawidłowa waga', 'red');
+    return;
+  }
+  const today = todayKey();
+  // Replace today's
+  state.weightLog = state.weightLog.filter(e => e.date !== today);
+  state.weightLog.push({ date: today, weight: w });
+  state.weightLog.sort((a, b) => a.date.localeCompare(b.date));
+
+  // Auto-tick wazenie
+  if (!state.dailyLog[today]) state.dailyLog[today] = {};
+  state.dailyLog[today].wazenie = true;
+
+  // New minimum?
+  if (w < state.minWeight) {
+    state.minWeight = w;
+  } else if (w > state.minWeight) {
+    // Penalty calculation - skalowana
+    const kgAbove = w - state.minWeight;
+    const expectedPenalty = penaltyAmount(kgAbove);
+    const mult = getPenaltyMultiplier();
+    const finalPenalty = -Math.round(expectedPenalty * mult);
+
+    // Check if we already gave penalty for this weight today
+    const todayPenaltyId = 'p_' + today;
+    removeEarningBySourceId(todayPenaltyId);
+    if (finalPenalty < 0) {
+      awardEarning(finalPenalty, `Kara za wagę +${kgAbove.toFixed(1)} kg powyżej ${state.minWeight.toFixed(1)} kg`, todayPenaltyId, { type: 'penalty' });
+    }
+  }
+
+  // Check weight level bonuses
+  const granted = await checkLevelBonuses();
+
+  input.value = '';
+  await saveState();
+  renderAll();
+
+  granted.forEach(g => {
+    if (g.kind === 'weight' && g.legendary) {
+      showToast(`★ ${WEIGHT_LEVEL_LEGENDARY[g.level]} · +${g.bonus.toLocaleString('pl-PL')} zł`, 'legendary');
+    } else if (g.kind === 'weight') {
+      showToast(`-${g.level} kg · +${g.bonus} zł`, 'green');
+    } else if (g.kind === 'kasa') {
+      showToast(`Awans · poziom kasowy ${g.level} · +${g.bonus} zł`, 'gold');
+    }
+  });
+  if (granted.length === 0) showToast(`Zapisano: ${w.toFixed(1)} kg`, 'green');
+}
+
+async function togglePRMilestone(it) {
+  const isDone = !!state.milestonesDone[it.id];
+  if (isDone) {
+    const ok = await confirmModal('Cofnąć osiągnięcie?', `Usunąć "${it.name}" i cofnąć ${it.reward.toLocaleString('pl-PL')} zł?`);
+    if (!ok) return;
+    delete state.milestonesDone[it.id];
+    removeEarningBySourceId('m_' + it.id);
+  } else {
+    const ok = await confirmModal('Zdobyć osiągnięcie?', `Zaznaczyć "${it.name}" jako zdobyte?<br><br>Reward: <strong>${it.reward.toLocaleString('pl-PL')} zł</strong>`);
+    if (!ok) return;
+    state.milestonesDone[it.id] = { date: todayKey(), reward: it.reward, name: it.name };
+    awardEarning(it.reward, it.name, 'm_' + it.id, { legendary: it.legendary });
+    showToast(`★ ${it.name}`, it.legendary ? 'legendary' : 'green');
+  }
+  await checkLevelBonuses();
+  await saveState();
+  renderAll();
+}
+
+async function unlockPerk(perkId, tierId) {
+  const perk = PERKS.find(p => p.id === perkId);
+  const tier = perk.tiers.find(t => t.id === tierId);
+  const tierIndex = perk.tiers.indexOf(tier);
+  const ok = await confirmModal(
+    'Wykupić perk?',
+    `<strong>${perk.icon} ${perk.name} — Tier ${tierIndex + 1}</strong><br><br>${tier.text}<br><br>Koszt: <strong>1 punkt perka</strong>`
+  );
+  if (!ok) return;
+  state.perksUnlocked[tierId] = { date: todayKey() };
+  await saveState();
+  showToast(`⚜ Perk: ${perk.name} Tier ${tierIndex + 1}`, 'legendary');
+  renderAll();
+}
+
+async function withdrawFromTreasure() {
+  const html = `
+    <div class="modal-field">
+      <label>Kwota (zł)</label>
+      <input type="number" min="1" id="withdraw-amount" placeholder="np. 1000">
+    </div>
+    <div class="modal-field">
+      <label>Cel</label>
+      <select id="withdraw-target">
+        <option value="xtb">XTB · akcje, ETF</option>
+        <option value="sts">STS · bukmacher</option>
+        <option value="inne">Inne (rodzina, sprzęt itd.)</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Komentarz (opcjonalny)</label>
+      <input type="text" id="withdraw-comment" placeholder="np. Akcje XYZ">
+    </div>
+  `;
+
+  const result = await formModal('Wypłata ze skarbca', `Aktualnie w skarbcu: <strong>${state.totalEarned.toLocaleString('pl-PL')} zł</strong>`, html);
+  if (!result.ok) return;
+
+  const amount = parseFloat(document.getElementById('withdraw-amount').value);
+  const target = document.getElementById('withdraw-target').value;
+  const comment = document.getElementById('withdraw-comment').value;
+
+  if (!amount || amount <= 0) { showToast('Nieprawidłowa kwota', 'red'); return; }
+  if (amount > state.totalEarned) { showToast('Brak wystarczających środków', 'red'); return; }
+
+  const targetNames = { xtb: 'XTB', sts: 'STS', inne: 'Inne' };
+  state.withdrawn[target] = (state.withdrawn[target] || 0) + amount;
+  state.totalEarned -= amount;
+  state.history.push({
+    id: 'h_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    name: `Wypłata → ${targetNames[target]}${comment ? ' · ' + comment : ''}`,
+    reward: -amount,
+    date: todayKey(),
+    sourceId: 'w_' + Date.now(),
+    type: 'withdraw',
+  });
+  await saveState();
+  renderAll();
+  showToast(`Wypłacono ${amount.toLocaleString('pl-PL')} zł na ${targetNames[target]}`, 'blue');
+}
+
+// ================================================================
+// MODAL & TOAST
+// ================================================================
+let modalResolve = null;
+function confirmModal(title, html) {
+  return new Promise(resolve => {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-text').innerHTML = html;
+    document.getElementById('modal-form').style.display = 'none';
+    document.getElementById('modal-overlay').classList.add('show');
+    modalResolve = resolve;
+  });
+}
+function formModal(title, html, formHtml) {
+  return new Promise(resolve => {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-text').innerHTML = html;
+    const form = document.getElementById('modal-form');
+    form.innerHTML = formHtml;
+    form.style.display = 'block';
+    document.getElementById('modal-overlay').classList.add('show');
+    modalResolve = (ok) => resolve({ ok });
+  });
+}
+document.getElementById('modal-confirm').addEventListener('click', () => {
+  document.getElementById('modal-overlay').classList.remove('show');
+  if (modalResolve) modalResolve(true);
+});
+document.getElementById('modal-cancel').addEventListener('click', () => {
+  document.getElementById('modal-overlay').classList.remove('show');
+  if (modalResolve) modalResolve(false);
+});
+
+let toastTimeout;
+function showToast(msg, variant = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (variant ? ' ' + variant : '');
+  setTimeout(() => t.classList.add('show'), 20);
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ================================================================
+// EXPORT / IMPORT / RESET
+// ================================================================
+async function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `codex-v3-${todayKey()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Eksport wykonany', 'green');
+}
+
+async function importData(file) {
+  const text = await file.text();
+  try {
+    const imported = JSON.parse(text);
+    const ok = await confirmModal('Importować?', 'Bieżące dane zostaną nadpisane. Kontynuować?');
+    if (!ok) return;
+    Object.assign(state, imported);
+    await saveState();
+    renderAll();
+    showToast('Import wykonany', 'green');
+  } catch (e) {
+    showToast('Błąd importu', 'red');
+  }
+}
+
+async function resetSeason() {
+  const ok1 = await confirmModal('Nowy sezon?', 'UWAGA: wszystko zostanie wymazane. Najpierw zrób <strong>eksport JSON</strong>.<br><br>Kontynuować?');
+  if (!ok1) return;
+  const ok2 = await confirmModal('Naprawdę?', 'To jest <strong>nieodwracalne</strong>. Ostatnie potwierdzenie.');
+  if (!ok2) return;
+  state = {
+    startDate: todayKey(),
+    weightLog: [], dailyLog: {}, repsLog: {},
+    milestonesDone: {}, perksUnlocked: {},
+    totalEarned: 0, totalEarnedRaw: 0, totalPenalties: 0,
+    withdrawn: { xtb: 0, sts: 0, inne: 0 },
+    history: [], minWeight: START_WEIGHT,
+    weightLevelBonusesGiven: {}, kasaLevelBonusesGiven: {},
+    reflections: {}, pactSigned: false,
+  };
+  await saveState();
+  renderAll();
+  showToast('Nowy sezon rozpoczęty', 'green');
+  setTimeout(() => showPactModal(), 600);
+}
+
+// ================================================================
+// PACT MODAL (one time, first time)
+// ================================================================
+async function showPactModal() {
+  const ok = await confirmModal(
+    '⚜ Pakt Gospodarza',
+    `Codex nie wykrywa oszustw. Pompki płytkie i kiwające się wpiszesz tak samo. Audiobook za "czytanie". Krokomierz na traktorze.<br><br>Możesz zarobić 200 000 zł w sezonie. <strong>Nikt Cię nie sprawdzi.</strong><br><br>Ale jedyna osoba, którą oszukasz - to Ty.<br><br>Akceptujesz pakt: <strong>gram uczciwie</strong>.`
+  );
+  if (ok) {
+    state.pactSigned = true;
+    await saveState();
+    showToast('Pakt zawarty. Sezon I rozpoczęty.', 'legendary');
+  }
+}
+
+// ================================================================
+// SUNDAY REFLECTION
+// ================================================================
+function getCurrentWeek() {
+  const today = new Date();
+  const yearStart = new Date(today.getFullYear(), 0, 1);
+  const weekNumber = Math.ceil(((today - yearStart) / 86400000 + yearStart.getDay() + 1) / 7);
+  return `${today.getFullYear()}-W${weekNumber}`;
+}
+
+function renderReflectionCard() {
+  const card = document.getElementById('reflection-card');
+  const week = getCurrentWeek();
+  if (isSunday() && !state.reflections[week]) {
+    card.classList.add('show');
+    document.getElementById('reflection-week').textContent = week.split('-W')[1];
+
+    // Compute weekly stats
+    const today = new Date();
+    const weekAgo = new Date(today); weekAgo.setDate(today.getDate() - 7);
+    let earnedWeek = 0;
+    let workouts = 0;
+    state.history.forEach(h => {
+      if (new Date(h.date) >= weekAgo && h.reward > 0) earnedWeek += h.reward;
+    });
+    Object.entries(state.repsLog).forEach(([d, reps]) => {
+      if (new Date(d) >= weekAgo && (reps.pompki > 0 || reps.przysiady > 0)) workouts++;
+    });
+    const lostWeek = state.weightLog.length >= 2
+      ? (state.weightLog[state.weightLog.length-1].weight - (state.weightLog.find(e => new Date(e.date) >= weekAgo)?.weight || state.weightLog[state.weightLog.length-1].weight))
+      : 0;
+
+    document.getElementById('reflection-earned').textContent = earnedWeek.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('reflection-lost').textContent = (lostWeek <= 0 ? '↓ ' : '↑ +') + Math.abs(lostWeek).toFixed(1) + ' kg';
+    document.getElementById('reflection-workouts').textContent = workouts;
+    document.getElementById('reflection-streak').textContent = calcStreak() + ' dni';
+  } else {
+    card.classList.remove('show');
+  }
+}
+
+document.getElementById('reflection-save').addEventListener('click', async () => {
+  const text = document.getElementById('reflection-text').value;
+  const week = getCurrentWeek();
+  state.reflections[week] = { text, date: todayKey() };
+  await saveState();
+  document.getElementById('reflection-card').classList.remove('show');
+  showToast('Refleksja zapisana', 'green');
+});
+document.getElementById('reflection-skip').addEventListener('click', async () => {
+  const week = getCurrentWeek();
+  state.reflections[week] = { text: '', date: todayKey(), skipped: true };
+  await saveState();
+  document.getElementById('reflection-card').classList.remove('show');
+});
+
+// ================================================================
+// INIT
+// ================================================================
+async function init() {
+  await loadState();
+  renderAll();
+  renderReflectionCard();
+
+  document.getElementById('weight-submit').addEventListener('click', logWeight);
+  document.getElementById('weight-input').addEventListener('keydown', e => { if (e.key === 'Enter') logWeight(); });
+  document.getElementById('withdraw-btn').addEventListener('click', withdrawFromTreasure);
+  document.getElementById('export-btn').addEventListener('click', exportData);
+  document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+  document.getElementById('import-file').addEventListener('change', e => { if (e.target.files[0]) importData(e.target.files[0]); });
+  document.getElementById('reset-btn').addEventListener('click', resetSeason);
+  document.getElementById('settings-btn').addEventListener('click', () => {
+    confirmModal('Ustawienia', 'Future expansions (kettlebell, sprzęt, czas z Anną, twórczość) są zakomentowane w kodzie. Edytuj plik HTML i odkomentuj sekcje, których chcesz użyć.<br><br>Aktualne kategorie:<br>• Daily questy<br>• Daily reps trening + kardio<br>• Milestone\'y wagowe (auto)<br>• PR siłowe + markery zdrowia<br>• Perki (od poziomu kasowego 10)<br>• Skarbiec z wypłatami<br>• Niedzielny rytuał refleksji<br>• Sabbath day (niedziela bez daily reps)');
+  });
+
+  // Pakt — first time only
+  if (!state.pactSigned && state.weightLog.length === 0 && Object.keys(state.dailyLog).length === 0) {
+    setTimeout(() => showPactModal(), 800);
+  }
+}
+
+init();
+
+/*
+=================================================================
+FUTURE EXPANSIONS — odkomentuj aby aktywować
+=================================================================
+
+A) Trening siłowy ze sprzętem (po -10 kg)
+const FUTURE_REPS_STRENGTH = [
+  { id: 'kb_swing', name: 'Kettlebell swing', rate: 1.0, unit: 'szt.' },
+  { id: 'goblet', name: 'Goblet squat 24 kg', rate: 2.0, unit: 'szt.' },
+  { id: 'pull_neg', name: 'Negatywne podciąganie', rate: 5.0, unit: 'szt.' },
+  { id: 'pull_full', name: 'Pełne podciąganie', rate: 20.0, unit: 'szt.' },
+];
+const FUTURE_PR_STRENGTH = [
+  { id: 'pr_pn1', name: 'Pierwsze podciągnięcie negatywne', reward: 800 },
+  { id: 'pr_pf1', name: 'Pierwsze podciągnięcie pełne', reward: 3000 },
+  { id: 'pr_pf5', name: '5 podciągnięć z rzędu', reward: 6000 },
+  { id: 'pr_pf10', name: '10 podciągnięć z rzędu', reward: 15000 },
+];
+
+B) Praca fizyczna w polu (sezon żniw)
+const FUTURE_REPS_FIELD = [
+  { id: 'pole', name: 'Praca w polu', rate: 20, unit: 'h' },
+  { id: 'naprawy', name: 'Naprawy/budowa', rate: 15, unit: 'h' },
+  { id: 'drewno', name: 'Rąbanie drewna', rate: 25, unit: 'h' },
+];
+
+C) Wellness / regeneracja
+const FUTURE_QUESTS_WELLNESS = [
+  { id: 'stretch', name: 'Stretching 15 min', reward: 10 },
+  { id: 'sauna', name: 'Sauna', reward: 25 },
+  { id: 'massage', name: 'Masaż', reward: 50 },
+  { id: 'meditation', name: 'Mindfulness/medytacja 20 min', reward: 15 },
+  { id: 'cold', name: 'Zimny natrysk / morsowanie', reward: 20 },
+];
+
+D) Czas z Anną
+const FUTURE_QUESTS_ANNA = [
+  { id: 'anna_30', name: '30 min sam na sam z Anną', reward: 50 },
+  { id: 'anna_walk', name: 'Wieczorny spacer razem', reward: 30 },
+  { id: 'anna_dinner', name: 'Wspólna kolacja bez ekranów', reward: 20 },
+];
+
+E) Twórczość / kanał YouTube
+const FUTURE_QUESTS_CONTENT = [
+  { id: 'rec', name: '30 min nagrywania', reward: 30 },
+  { id: 'edit', name: '30 min montażu', reward: 20 },
+  { id: 'publish_long', name: 'Publikacja filmu YouTube', reward: 300 },
+  { id: 'publish_short', name: 'Publikacja Reels/Shorts', reward: 50 },
+];
+
+F) Nauka / projekty
+const FUTURE_QUESTS_LEARN = [
+  { id: 'learn', name: '30 min nauki / kurs', reward: 30 },
+  { id: 'project', name: '30 min pracy nad Dziennikiem Upraw', reward: 40 },
+];
+
+G) Side bossy
+const FUTURE_BOSSES = [
+  { id: 'wesele', name: 'Wesele bez wzrostu wagi', reward: 500 },
+  { id: 'swieta', name: 'Święta bez wzrostu wagi (max +2 kg)', reward: 3000 },
+  { id: 'zniwa', name: 'Żniwa bez utraty formy', reward: 5000 },
+  { id: 'plateau', name: 'Plateau przebite', reward: 2000 },
+];
+
+H) Side quests tygodniowe (random co poniedziałek)
+const FUTURE_WEEKLY_CHALLENGES = [
+  { name: '100 pompek do końca tygodnia', reward: 500 },
+  { name: '5 dni z rzędu kalorie+sen+kroki', reward: 400 },
+  { name: 'Spacer 10 km w jeden dzień', reward: 400 },
+];
+
+I) Ukryte achievementy
+const FUTURE_HIDDEN_ACHIEVEMENTS = [
+  { id: '1000pushups', threshold: 1000, name: '1000 pompek łącznie', reward: 500 },
+  { id: '100km', threshold: 100, name: '100 km marszu łącznie', reward: 1000 },
+  { id: '50bedtime', threshold: 50, name: '50 dni 22:30 z rzędu', reward: 2000 },
+];
+
+J) Sezon II - Maintenance (po -25 kg)
+const FUTURE_MAINTENANCE = [
+  { id: 'm30', name: 'Utrzymanie 90 kg przez 30 dni', reward: 2000 },
+  { id: 'm90', name: 'Utrzymanie 90 kg przez 90 dni', reward: 5000 },
+  { id: 'm365', name: 'Utrzymanie 90 kg przez 365 dni', reward: 20000 },
+];
+
+K) Charity / wpływ społeczny
+const FUTURE_CHARITY = [
+  { id: 'volunteer', name: 'Wolontariat 2h+', reward: 50 },
+  { id: 'mentor', name: 'Mentoring kogoś z nadwagą', reward: 100 },
+];
+
+=================================================================
+*/
+</script>
+</body>
+</html>
